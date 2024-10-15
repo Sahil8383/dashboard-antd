@@ -1,12 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Layout, Menu, Table, Avatar, Space, Tag, Input, ConfigProvider, TableProps } from 'antd';
 import { UserOutlined, AppstoreOutlined, FormOutlined, SettingOutlined, FileTextOutlined } from '@ant-design/icons';
-import { BellRing, Codepen, Codesandbox, Filter, MessageSquare, Plus, Search, Sliders } from 'lucide-react';
+import { BellRing, Codesandbox, Filter, MessageSquare, Plus, Search, Sliders } from 'lucide-react';
 import { debounce } from '../utils/utils';
 import { data } from '../data/data';
 import './Dashboard.css'; // Custom CSS for styling
 import { DataType, MenuItem } from '../types/types';
 import { siderStyle } from '../styles/styles';
+import SearchInput from './ui/search-input';
+import NotificationBar from './ui/header-right';
+import TicketHeader from './ui/ticket-header';
+import WelcomeMessage from './ui/header-left';
 
 const { Header, Sider, Content } = Layout;
 
@@ -137,51 +141,16 @@ const Dashboard: React.FC = () => {
       {/* Main content */}
       <Layout style={{ marginLeft: collapsed ? 80 : 250, transition: 'margin-left 0.2s ease-in-out' }}>
         <Header className="bg-[#fff] w-full min-h-[100px] px-6 flex justify-between items-center border border-[#f0f0f0]">
-          <div className="flex flex-col">
-            <p className="m-0 text-[24px] font-bold text-black">Welcome Back</p>
-            <p className="m-0 text-[#888] leading-0 mt-[-30px]">Hello Mahfuzul, Good Morning!</p>
-          </div>
-          <div>
-            {/* Search Input */}
-            <div className="flex items-center bg-[#f5f7fb] rounded-full px-4 w-[300px] h-[40px] shadow-sm">
-              <Search className="text-gray-400 mr-2" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="bg-transparent focus:outline-none text-gray-500 w-full"
-                value={searchTerm}
-                onChange={onSearchChange}
-              />
-              <Sliders className="text-gray-400 ml-2" />
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="bg-[#f5f7fb] rounded-full p-2">
-              <MessageSquare className="text-gray-400" />
-            </div>
-            <div className="bg-[#f5f7fb] rounded-full p-2">
-              <BellRing className="text-gray-400" />
-            </div>
-            <Avatar src="https://randomuser.me/api/portraits/men/1.jpg" />
-          </div>
+          <WelcomeMessage userName={'Sahil'} />
+            <SearchInput
+              searchTerm={searchTerm}
+              onSearchChange={onSearchChange}
+            />
+          <NotificationBar avatarSrc='https://randomuser.me/api/portraits/men/1.jpg' />
         </Header>
 
         <Content className="p-[24px] bg-[#f9f9f9]">
-          <div className="flex justify-between items-center mb-5">
-            <h2 className="font-bold text-black text-[24px]">Tickets</h2>
-            <div className="flex space-x-4">
-              {/* Filter button */}
-              <button className="flex items-center space-x-2 shadow-lg rounded-full border border-gray-300 px-4 py-2 text-gray-700">
-                <Filter className="h-5 w-5 text-gray-500" />
-                <span>Filters</span>
-              </button>
-              {/* New Ticket button */}
-              <button className="flex items-center space-x-2 rounded-full bg-[#5332e6] px-6 py-2 text-white">
-                <Plus className="h-5 w-5 text-white" />
-                <span>New Ticket</span>
-              </button>
-            </div>
-          </div>
+          <TicketHeader/>
           {/* Data Table */}
           <Table rowSelection={{ type: 'checkbox', ...rowSelection }} columns={columns} dataSource={filteredData} pagination={false} />
         </Content>
