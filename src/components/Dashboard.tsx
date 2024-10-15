@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Layout, Menu, Table, Avatar, Space, Tag, Input, ConfigProvider, TableProps } from 'antd';
+import { Layout, Menu, Table, Avatar, Space, Tag, ConfigProvider, TableProps } from 'antd';
 import { UserOutlined, AppstoreOutlined, FormOutlined, SettingOutlined, FileTextOutlined } from '@ant-design/icons';
-import { BellRing, Codesandbox, Filter, MessageSquare, Plus, Search, Sliders } from 'lucide-react';
 import { debounce } from '../utils/utils';
 import { data } from '../data/data';
-import './Dashboard.css'; // Custom CSS for styling
+import './Dashboard.css'; 
 import { DataType, MenuItem } from '../types/types';
 import { siderStyle } from '../styles/styles';
 import SearchInput from './ui/search-input';
 import NotificationBar from './ui/header-right';
 import TicketHeader from './ui/ticket-header';
 import WelcomeMessage from './ui/header-left';
+import Logo from './ui/nav-logo';
 
 const { Header, Sider, Content } = Layout;
 
@@ -97,9 +97,6 @@ const Dashboard: React.FC = () => {
   // Row selection for the table
   const rowSelection: TableProps<DataType>['rowSelection'] = {
     type: 'checkbox',
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(`Selected Row Keys: ${selectedRowKeys}`, 'Selected Rows: ', selectedRows);
-    },
   };
 
   const handleResize = () => {
@@ -118,12 +115,7 @@ const Dashboard: React.FC = () => {
     <Layout hasSider style={{ minHeight: '100vh' }}>
       {/* Sidebar */}
       <Sider collapsible collapsed={collapsed} onCollapse={(value)=> setCollapsed(value)} style={siderStyle} theme="light" width={250} className="bg-[#fff] border-r-[f0f0f0]">
-      <div className='flex flex-row justify-center items-center gap-2 mt-4'>
-        <div className="flex items-center">
-          <Codesandbox className='w-[24px] text-[#3f6ad8]' />
-          {collapsed ? '' : <span className="m-4 text-[24px] font-bold text-[#3f6ad8]">Simply Web</span>}
-        </div>
-      </div>
+        <Logo collapsed={collapsed} />
         <ConfigProvider theme={{ components: { Menu: { itemSelectedColor: "#5332e6" } } }}>
           <Menu
             mode="inline"
